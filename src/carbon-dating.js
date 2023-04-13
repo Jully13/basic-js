@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../extensions/index.js');
+const { NotImplementedError, testOptional } = require('../extensions/index.js');
 
 const MODERN_ACTIVITY = 15;
 const HALF_LIFE_PERIOD = 5730;
@@ -29,7 +29,6 @@ if (!isFinite(activity) || activity <= 0) {
 const result = Math.ceil((HALF_LIFE_PERIOD/0.693)*Math.log(MODERN_ACTIVITY/activity));
 return result > 0 ? result : false;
 }
-
 
 module.exports = {
   dateSample
