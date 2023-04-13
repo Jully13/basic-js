@@ -23,8 +23,6 @@ function getSeason(date) {
     throw new Error('Invalid date!')
   }
   return ['winter','spring','summer','autumn','winter'][Math.floor((date.getMonth()+1)/3)]
-  //throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
 }
 
 // let month = date.getMonth();
@@ -40,10 +38,6 @@ function getSeason(date) {
 // } else if (month == 8 || month == 9 || month == 10) {
 //   return "autumn"
 // }
-
-
-
-
 
 
 module.exports = {

@@ -1,3 +1,4 @@
+
 const { NotImplementedError } = require('../extensions/index.js');
 
 /**
@@ -14,31 +15,29 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 function transform(arr) {
-  console.debug(arr)
-  if (!(arr instanceof Array)){
-    throw new Error('\'arr\' parameter must be an instance of the Array!')
-  }
-  let res = []
-  let status = '';
-  for (let i = 0;i<arr.length;i++){
+  if (!Array.isArray(arr)) throw new Error(`'arr' parameter must be an instance of the Array!`);
+  const res = [];
+  for (let i = 0; i < arr.length; i++) {
     switch (arr[i]) {
-      case '--discard-next':{status='discard';break;}
-      case '--discard-prev':{if (res.length>0&&status!='discarded'){res.pop()};break;}
-      case '--double-next':{if (i<arr.length-1){status='double'};break;}
-      case '--double-prev':{if (i>0&&status!='discarded'){res.push(res[res.length-1])};break;}
-      default:{
-        if (status=='discard'){
-          status='discarded'
-          break;
-        }else if (status=='double'){
-          res.push(arr[i]);
-        }
-        status=''
-        res.push(arr[i]);
-      break;}
+      case '--discard-prev':
+        if (arr[i-2] === '--discard-next') break
+        res[res.length - 1] && res.pop();
+        break
+      case '--double-prev':
+        if (arr[i-2] === '--discard-next') break
+        arr[i - 1] && res.push(arr[i - 1]);
+        break
+      case '--discard-next':
+        arr[i+1] && i++;
+        break
+      case '--double-next':
+        arr[i+1] && res.push(arr[i+1])
+        break
+      default:
+        res.push(arr[i])
     }
   }
-  return res
+  return res;
 }
 
 module.exports = {
